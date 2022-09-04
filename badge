@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then 
+	echo "usage: 
+	$(basename "$0") template name [left] [right] [center] [dest]"
+	exit
+fi
+if [ ! -r "$1" ]; then
+	echo "$1 not found"
+	exit 1
+fi
+src="$1"
+dest="${6:-$2.png}"
+name="$2"
+left="$(echo $3 | sed -e 's|,|\n|g')"
+right="$(echo $4 | sed -e 's|,|\n|g')"
+center="$(echo $5 | sed -e 's|,|\n|g')"
+
+if [ -z "$left" ] && [ -z "$right" ] && [ -n "$center" ]; then
+	centery=500
+else
+	centery=400
+fi
+
+convert \
+	"$src" \
+	-gravity center \
+	-pointsize 80 \
+	-fill "#ffffffff" \
+	-font "Open-Sans-Bold" \
+	-annotate +0+300 "$(./initials.py "$name")" \
+	-pointsize 50 \
+	-annotate +0+$centery "$center" \
+	-gravity west \
+	-annotate +100+520 "$left" \
+	-gravity east \
+	-annotate +100+520 "$right" \
+	"$dest"

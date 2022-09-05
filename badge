@@ -27,8 +27,9 @@ convert \
 	-gravity center \
 	-pointsize 80 \
 	-fill "#ffffffff" \
-	-font "Open-Sans-Bold" \
+	-font "Comfortaa-Bold" \
 	-annotate +0+300 "$(./initials.py "$name")" \
+	-font "Open-Sans-Bold" \
 	-pointsize 50 \
 	-annotate +0+$centery "$center" \
 	-gravity west \
